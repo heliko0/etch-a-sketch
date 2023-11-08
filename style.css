@@ -1,0 +1,28 @@
+:root {
+    --container-size: 500px;
+}
+
+
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+button{
+    width: 100px;
+    margin-bottom: 30px;
+}
+
+#container {
+    margin: auto;
+    width: var(--container-size);
+    height: var(--container-size);
+    display: flex;
+    flex-wrap: wrap;
+    order: 1;
+}
+
+.cell {
+    box-sizing: border-box;
+}
