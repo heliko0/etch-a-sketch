@@ -29,54 +29,41 @@ function createGrid(x) {
     for (let rows = 0; rows < x; rows++) {
         //adds 16x16 grid
         for (let columns = 0; columns < x; columns++) {
+
             const cell = document.createElement("div");
             cell.className = "cell";
             cell.style.width = `${containerWidth / x}px`;
-            cell.style.height = `${containerHeight / x}px`;
-            // equal number of squares per row and column
+            cell.style.height = `${containerHeight / x}px`; // equal number of squares per row and column
             cell.style.border = "1px solid black";
-            cell.style.backgroundColor = "rgba (0,0,0,0)"
-            cell.dataset.opacity = 0
 
-            // cell.addEventListener("mouseover", () => {
-            //     let r = Math.floor(Math.random() * 256);
-            //     let g = Math.floor(Math.random() * 256);
-            //     let b = Math.floor(Math.random() * 256);
-            //     let a = 0.1;
+            let r = Math.floor(Math.random() * 256); //creates rgb random starting values for each cell
+            let g = Math.floor(Math.random() * 256);
+            let b = Math.floor(Math.random() * 256);
+            let a = 0;
 
-            //     let rgba = `rgba(0,0,0,${a})`;
+            let rgba = `rgba(${r},${g},${b},${a})`; //converts to rgba value from strings
+            cell.style.backgroundColor = `${rgba}`; //sets rgba value
 
-            //     cell.style.backgroundColor = `${rgba}`;
-            // }); //on hover change to random colour
+            cell.dataset.rgba = rgba; //stores rgba value in dataset
+            cell.dataset.opacity = 0; //stores opacity in dataset
 
-            cell.addEventListener("mouseover", darken);
+            cell.addEventListener("mouseover", darken); // on hover, activate darken function
 
             container.appendChild(cell);
         }
     }
 }
 
-function darken (event) {
+function darken(event) {
     let cell = event.target;
-    let currentOpacity = parseFloat(cell.dataset.opacity);
-    currentOpacity += 0.1;
-    cell.style.backgroundColor = `rgba(0,0,0,${currentOpacity})`;
-    cell.dataset.opacity = currentOpacity;
-    
+    let currentOpacity = parseFloat(cell.dataset.opacity); // gets opacity from dataset and stores in new variable. parseFloat needed due to datasets being strings
+    let newOpacity = currentOpacity + 0.1;  // opacity incremented by 0.1 10%
+    let newRGBA = cell.dataset.rgba;    // gets rgba from dataset and stores in new variable. parseFloat not needed as we use string methods 
+
+    newRGBA = newRGBA.replace(currentOpacity, newOpacity);  // converts opacity values from floats to strings and replaces old opacity value to new one
+
+    cell.style.backgroundColor = newRGBA;   // update CSS with darkened rgba value
+    cell.dataset.opacity = newOpacity;  // updates opacity dataset
+    cell.dataset.rgba = newRGBA;    // updates rgba dataset
 }
 
-
-// const cells = document.querySelectorAll(".cell");
-
-// cells.forEach(cell => {
-//     cell.addEventListener("mouseover", (event) => {
-//         let style = window.getComputedStyle(event.target);
-//         let currentColour = style.backgroundColor;
-//         console.log(currentColour)
-
-//         let currentOpacity = currentColour.slice()
-//         currentOpacity += 0.1;
-
-//         let rgba
-//     })
-// })
