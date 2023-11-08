@@ -23,7 +23,7 @@ const containerWidth = container.clientWidth;
 const containerHeight = container.clientHeight;
 //get width and height of container from CSS
 
-document.addEventListener("load", createGrid(16)); // on load make 16x16 grid
+createGrid(16); // on load make 16x16 grid
 
 function createGrid(x) {
     for (let rows = 0; rows < x; rows++) {
@@ -35,19 +35,48 @@ function createGrid(x) {
             cell.style.height = `${containerHeight / x}px`;
             // equal number of squares per row and column
             cell.style.border = "1px solid black";
+            cell.style.backgroundColor = "rgba (0,0,0,0)"
+            cell.dataset.opacity = 0
 
-            cell.addEventListener("mouseover", () => {
-                let r = Math.floor(Math.random() * 256);
-                let g = Math.floor(Math.random() * 256);
-                let b = Math.floor(Math.random() * 256);
-                
+            // cell.addEventListener("mouseover", () => {
+            //     let r = Math.floor(Math.random() * 256);
+            //     let g = Math.floor(Math.random() * 256);
+            //     let b = Math.floor(Math.random() * 256);
+            //     let a = 0.1;
 
-                let rgb = `rgb(${r}, ${g}, ${b})`;
+            //     let rgba = `rgba(0,0,0,${a})`;
 
-                cell.style.backgroundColor = `${rgb}`;
-            }); //on hover change to random colour
+            //     cell.style.backgroundColor = `${rgba}`;
+            // }); //on hover change to random colour
+
+            cell.addEventListener("mouseover", darken);
 
             container.appendChild(cell);
         }
     }
 }
+
+function darken (event) {
+    let cell = event.target;
+    let currentOpacity = parseFloat(cell.dataset.opacity);
+    currentOpacity += 0.1;
+    cell.style.backgroundColor = `rgba(0,0,0,${currentOpacity})`;
+    cell.dataset.opacity = currentOpacity;
+    
+}
+
+
+// const cells = document.querySelectorAll(".cell");
+
+// cells.forEach(cell => {
+//     cell.addEventListener("mouseover", (event) => {
+//         let style = window.getComputedStyle(event.target);
+//         let currentColour = style.backgroundColor;
+//         console.log(currentColour)
+
+//         let currentOpacity = currentColour.slice()
+//         currentOpacity += 0.1;
+
+//         let rgba
+//     })
+// })
