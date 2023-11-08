@@ -20,7 +20,7 @@ button.addEventListener("click", () => {
 
 const container = document.querySelector("#container");
 const containerWidth = container.clientWidth;
-const containerHeight = container.clientHeight; 
+const containerHeight = container.clientHeight;
 //get width and height of container from CSS
 
 document.addEventListener("load", createGrid(16)); // on load make 16x16 grid
@@ -32,16 +32,22 @@ function createGrid(x) {
             const cell = document.createElement("div");
             cell.className = "cell";
             cell.style.width = `${containerWidth / x}px`;
-            cell.style.height = `${containerHeight / x}px`; 
+            cell.style.height = `${containerHeight / x}px`;
             // equal number of squares per row and column
             cell.style.border = "1px solid black";
 
             cell.addEventListener("mouseover", () => {
-                cell.style.backgroundColor = "black";
-            }); //on hover change to black
+                let r = Math.floor(Math.random() * 256);
+                let g = Math.floor(Math.random() * 256);
+                let b = Math.floor(Math.random() * 256);
+                
+
+                let rgb = `rgb(${r}, ${g}, ${b})`;
+
+                cell.style.backgroundColor = `${rgb}`;
+            }); //on hover change to random colour
 
             container.appendChild(cell);
         }
     }
 }
-
